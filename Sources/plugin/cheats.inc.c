@@ -20,6 +20,8 @@
 // The EXAMPLE_* addresses below are fake and guarded: EXAMPLE_ENABLED is 0, so nothing is
 // written until you set it to 1 with real addresses in place.
 #define EXAMPLE_ENABLED 0
+static u8 fps60OriginalByte = 0;
+static int fps60OriginalSaved = 0;
 
 // EXAMPLE - replace with your game's address. A counter you want pinned to a value.
 #define EXAMPLE_ADDR_DIRECT   0x00000000u
@@ -74,21 +76,35 @@ static int OneShot(int id)
         // For a CODE patch (an instruction rewrite in the read-only .text segment):
         //   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0); // once
         //   ALWAYS save the original instruction first so the cheat can be switched off,
-        //   then W32() the new one and flush:
-        //   svcFlushEntireDataCache(); svcInvalidateEntireInstructionCache();
-        // NEVER auto-enable a code patch on boot.
-    }
-    return 0;
-}
+
 
 // Continuous cheats: applied every tick while the menu is CLOSED (game running).
 // Keep this cheap - it runs at game framerate.
-static void ApplyCheats(void)
+if (cheatState[CH_60FPS])
 {
-    // Guard, not #if: the example bodies below stay COMPILED (so they cannot silently rot
+    svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0);
+
+    if (!fps60OriginalSaved)
+    {
+        fps60OriginalByte = R8(0x3017E569);
+        fps60OriginalSaved = 1;
+    }
+
+    W8(0x3017E569, 0x00);
+    svcFlushEntireDataCache();
+    svcInvalidateEntireInstructionCache();
+}
+            else if (fps60OriginalSaved)
+{
+    svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0);
+    W8(0x3017E569, fps60OriginalByte);
+    svcFlushEntireDataCache();
+    svcInvalidateEntireInstructionCache();
+    fps60OriginalSaved = 0;
+}
+    // Guard, not #if: the example bodies below stay COMPILED...
     // as the engine changes) while -Os folds them away entirely until you flip the flag.
     if (!EXAMPLE_ENABLED) return;
-
     u32 pad = HID_PAD;
 
     // EXAMPLE - direct write. Pins a value for as long as the cheat is on.
@@ -122,10 +138,8 @@ static void ApplyCheats(void)
 static int IsToggleCheat(int id)
 {
     switch (id)
-    {
-        case CH_EX_DIRECT: case CH_EX_BYTE: case CH_EX_WORD:
-        case CH_EX_BASEOFF: case CH_EX_HOTKEY:
-            return 1;
-        default: return 0;
-    }
-}
+{
+case CH_60FPS:
+case CH_EX_DIRECT: case CH_EX_BYTE: case CH_EX_WORD:
+case CH_EX_BASEOFF: case CH_EX_HOTKEY:
+    return 1;
