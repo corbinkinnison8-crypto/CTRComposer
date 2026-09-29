@@ -43,14 +43,10 @@ static const Item toolsItems[] = {
     IT_TOOL("Hex Editor",   T_HEXEDIT, "Browse memory as a live hex grid and edit any byte on the spot. Jump to an address, or to your Cheat Search result. Read-only regions are protected."),
     IT_TOOL("About",        T_ABOUT,   "Plugin info and credits."),
 };
-
-// EXAMPLE cheats - these demonstrate the shapes a cheat can take. Delete them and write your
-// own; the descriptions are what the info box ({X}) shows.
-// EVERY row here is INERT: EXAMPLE_ENABLED is 0, so toggling them writes nothing at all.
-// They exist so you can walk the menu - navigation, auto-repeat, the {X} info box, {Y}
-// favorites, toasts, the checkbox-vs-action distinction - before you have a single address.
 static const Item exampleItems[] = {
     IT_SEP("CONTINUOUS (toggles)"),
+    IT_CHEAT("60 FPS", CH_60FPS,
+             "Attempt to unlock the game's 30 FPS limit."),
     IT_CHEAT("Example: direct write",  CH_EX_DIRECT,
              "EXAMPLE - inert until you edit it. Writes a fixed 16-bit value to a fixed address every frame while it is on. The simplest kind of cheat: see EXAMPLE_ADDR_DIRECT in Sources/main.c."),
     IT_CHEAT("Example: byte write",    CH_EX_BYTE,
