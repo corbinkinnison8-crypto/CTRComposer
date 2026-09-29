@@ -92,8 +92,6 @@ static void ApplyCheats(void)
     fps60OriginalByte = R8(0x3017E569);
     fps60OriginalSaved = 1;
 }
-    }
-
     W8(0x3017E569, 0x00);
     svcFlushEntireDataCache();
     svcInvalidateEntireInstructionCache();
