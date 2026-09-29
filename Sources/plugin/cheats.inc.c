@@ -86,7 +86,7 @@ if (cheatState[CH_60FPS])
 {
     svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0);
 
-    if (!fps60OriginalSaved)
+    if (! CH_Efps60OriginalSaved)
     {
         fps60OriginalByte = R8(0x3017E569);
         fps60OriginalSaved = 1;
@@ -145,3 +145,8 @@ case CH_60FPS:
 case CH_EX_DIRECT: case CH_EX_BYTE: case CH_EX_WORD:
 case CH_EX_BASEOFF: case CH_EX_HOTKEY:
     return 1;
+    
+    default:
+        return 0;
+    }
+}
