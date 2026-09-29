@@ -79,17 +79,19 @@ static int OneShot(int id)
         //   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0); // once
         //   ALWAYS save the original instruction first so the cheat can be switched off,
 
-
-// Continuous cheats: applied every tick while the menu is CLOSED (game running).
-// Keep this cheap - it runs at game framerate.
-if (cheatState[CH_60FPS])
+static void ApplyCheats(void)
+{
+    // Continuous cheats: applied every tick while the menu is CLOSED (game running).
+    // Keep this cheap - it runs at game framerate.
+    if (cheatState[CH_60FPS])
 {
     svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0);
 
-    if (! CH_Efps60OriginalSaved)
-    {
-        fps60OriginalByte = R8(0x3017E569);
-        fps60OriginalSaved = 1;
+    if (!fps60OriginalSaved)
+{
+    fps60OriginalByte = R8(0x3017E569);
+    fps60OriginalSaved = 1;
+}
     }
 
     W8(0x3017E569, 0x00);
