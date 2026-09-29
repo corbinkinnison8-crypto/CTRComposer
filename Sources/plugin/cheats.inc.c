@@ -69,7 +69,7 @@ static int OneShot(int id)
             }
             else g_oneShotMsg = "EXAMPLE";
             return 1;
-
+    }
         // Add your one-shots here:
         //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 0;
         //
