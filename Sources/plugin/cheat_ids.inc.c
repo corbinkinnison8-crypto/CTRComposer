@@ -12,9 +12,10 @@
 // Game-specific. One enum entry per cheat, then a row in a Folder below (IT_CHEAT) and an
 // implementation in ApplyCheats() (continuous) or OneShot() (applied once).
 // CH_CFG_* are not cheats - they are Settings rows reusing the same row-drawing code.
-enum {
+enum {CH_60FPS,
+CH_EX_DIRECT,
     // ---- EXAMPLE cheats: replace these with your game's ----
-    CH_EX_DIRECT,     // continuous: direct u16 write to a fixed address
+  // continuous: direct u16 write to a fixed address
     CH_EX_BYTE,       // continuous: u8 write
     CH_EX_WORD,       // continuous: u32 write
     CH_EX_BASEOFF,    // continuous: base pointer + offset write
