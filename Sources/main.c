@@ -16,7 +16,7 @@
 #include "engine/platform.inc.c"
 
 #include "engine/render.inc.c"
-
+#include "../fps_overlay.inc.c"
 #include "plugin/cheat_ids.inc.c"
 
 #include "engine/storage.inc.c"
