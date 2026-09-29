@@ -153,8 +153,8 @@ void ThreadMain(void *arg)
     int comboPrev = 0;
     while (1)
     {
-        // 4ms while a toast is on screen (fast re-stamp), 20ms otherwise
-        svcSleepThread((toastTicks > 0 ? 4 : 20) * 1000 * 1000);
+        // 4ms while a toast is on screen (fast re-stamp), 20ms 
+        svcSleepThread(4 * 1000 * 1000);
 
 #if EXIT_HANDSHAKE
         // The 3gx contract appears to be: clean up on onProcessExitEvent, then signal
@@ -221,6 +221,8 @@ void ThreadMain(void *arg)
 
         ApplyCheats();
         ToastTick();
+        FpsOverlayTick();
+FpsOverlayDraw();
     }
 }
 
