@@ -71,7 +71,7 @@ static int OneShot(int id)
             return 1;
 
         // Add your one-shots here:
-        //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 1;
+        //   case CH_MY_CHEAT: W16(0x00123456, 0x0064); return 0;
         //
         // For a CODE patch (an instruction rewrite in the read-only .text segment):
         //   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SET_MMU_TO_RWX, 0, 0); // once
